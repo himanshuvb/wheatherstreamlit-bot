@@ -153,7 +153,7 @@ class LLMClient:
 
         prompt = f"""
         Extract the city name from the following user input.
-
+        user might only give city name, or might give a full sentence like "What's the weather in London?".
         User input: {user_input}
 
         Return ONLY the city name.
