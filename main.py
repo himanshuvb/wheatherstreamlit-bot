@@ -148,6 +148,33 @@ class LLMClient:
             f"Wind Speed: {weather_wind_speed} m/s"
         )
         return weather_info 
+    def extract_city(self, user_input: str) -> str:
+        """Extract the city name from a natural-language weather query."""
+
+        prompt = f"""
+        Extract the city name from the following user input.
+
+        User input: {user_input}
+
+        Return ONLY the city name.
+        Do not return any explanation.
+        """
+
+        try:
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=prompt
+            )
+
+            city = response.text.strip()
+
+            if not city:
+                raise ValueError("Could not determine city from input.")
+
+            return city
+
+        except Exception as e:
+            raise ValueError(f"Error extracting city: {str(e)}")
 
 
 class WeatherAssistant:
